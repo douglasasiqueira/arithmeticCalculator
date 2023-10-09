@@ -20,7 +20,7 @@ public class JWTService {
     private String secret;
 
     @Value("auth.issuer")
-    private String issuer = "arithmetic.calculator";
+    private String issuer;
 
 
     private final static long tokenDuration = 24 * 60 * 60 * 1000L;

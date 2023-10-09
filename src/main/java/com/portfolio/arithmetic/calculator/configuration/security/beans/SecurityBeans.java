@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Objects;
+
 @Configuration
 public class SecurityBeans {
     @Bean
@@ -18,10 +20,11 @@ public class SecurityBeans {
     public static Long getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+        if (Objects.nonNull(authentication) &&
+                !(authentication instanceof AnonymousAuthenticationToken)) {
             return (Long) authentication.getPrincipal();
         }
 
-        throw new AuthenticationException("Couldn't find logged User");
+        throw new AuthenticationException("Couldn't find logged User.");
     }
 }

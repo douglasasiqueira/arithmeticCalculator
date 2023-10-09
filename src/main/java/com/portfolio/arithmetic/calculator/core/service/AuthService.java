@@ -22,14 +22,12 @@ public class AuthService {
     public String generateToken(final String username, final String password) {
         final Optional<User> optionalUser =  userService.getUser(username);
 
-        System.out.println(username);
-
         if (optionalUser.isEmpty()) {
-            throw new AuthenticationException("Couldn't Authenticate user");
+            throw new AuthenticationException("Couldn't Authenticate user.");
         }
 
         if (!passwordEncoder.matches(password, optionalUser.get().getPassword())) {
-            throw new AuthenticationException("Couldn't Authenticate user");
+            throw new AuthenticationException("Couldn't Authenticate user.");
         }
 
         return jwtService.generateToken(optionalUser.get());

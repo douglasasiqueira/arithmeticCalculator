@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface OperationRepository extends CrudRepository<Operation, Long> {
     Optional<Operation> findByType(String type);
 
+    @Override
     List<Operation> findAll();
 }

@@ -3,6 +3,8 @@ package com.portfolio.arithmetic.calculator.core.entity;
 import com.portfolio.arithmetic.calculator.core.customException.InsufficientBalanceException;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +18,8 @@ import java.util.stream.Stream;
 
 @Entity
 @Table(name = "users")
-@Data
+@Getter
+@Setter
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,13 +2,18 @@ package com.portfolio.arithmetic.calculator.core.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

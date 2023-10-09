@@ -1,6 +1,6 @@
 package com.portfolio.arithmetic.calculator.core.service;
 
-import com.portfolio.arithmetic.calculator.core.application.OperationBehavior;
+import com.portfolio.arithmetic.calculator.core.application.operationBehavior.OperationBehavior;
 import com.portfolio.arithmetic.calculator.core.customException.ResourceNotFoundException;
 import com.portfolio.arithmetic.calculator.core.entity.Operation;
 import com.portfolio.arithmetic.calculator.core.entity.User;
@@ -22,9 +22,6 @@ public class OperationService {
     private OperationRepository operationRepository;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private AuthService authService;
 
     @Autowired
@@ -41,15 +38,14 @@ public class OperationService {
     public Map<String, String> executeOperation(final long id, final Map<String, String> operators) {
         final Optional<Operation> operation = operationRepository.findById(id);
         final User user = authService.getAuthenticatedUser();
-        final Map<String, String> response;
-
+        Map<String, String> response;
 
         if (operation.isEmpty()) {
             throw new ResourceNotFoundException();
         }
 
         user.withdraw(operation.get().getCost());
-        response = operation.get().apply(this.operationBehaviorList, operators);
+        response = operation.get().getResponse(this.operationBehaviorList, operators);
         recordService.createRecord(user, operation.get(), response.toString());
 
         return response;
