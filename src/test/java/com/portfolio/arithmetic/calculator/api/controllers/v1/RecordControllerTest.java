@@ -22,8 +22,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = RecordController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -52,19 +51,19 @@ public class RecordControllerTest {
                 .andExpect(status().isBadRequest());
 
         verify(recordService, times(0))
-                .findAllByUserId(anyLong(), anyInt(), anyInt());
+                .findAllByUserIdAndOperationIdPageable(anyLong(), anyInt(), anyInt());
 
         mockMvc.perform(get("/v1/record?page=1&size=10"))
                 .andExpect(status().isOk());
 
         verify(recordService, times(1))
-                .findAllByUserId(null, 1, 10);
+                .findAllByUserIdAndOperationIdPageable(null, 1, 10);
 
         mockMvc.perform(get("/v1/record?page=1&size=10&operationId=1234"))
                 .andExpect(status().isOk());
 
         verify(recordService, times(1))
-                .findAllByUserId(1234L, 1, 10);
+                .findAllByUserIdAndOperationIdPageable(1234L, 1, 10);
     }
 
     @Test
@@ -73,11 +72,14 @@ public class RecordControllerTest {
         final List<RecordDTO> recordDTOList = recordList.stream()
                 .map(recordMapper::recordToRecordDTO).toList();
 
-        when(recordService.findAllByUserId(anyLong(), anyInt(), anyInt()))
+        when(recordService.findAllByUserIdAndOperationIdPageable(anyLong(), anyInt(), anyInt()))
                 .thenReturn(recordList);
+        when(recordService.countAllByUserIdAndOperationId(anyLong()))
+                .thenReturn(10L);
 
         mockMvc.perform(get("/v1/record?page=1&size=10&operationId=1234"))
                 .andExpect(status().isOk())
+                .andExpect(header().string("X-total-count", "10"))
                 .andExpect(content().string(objectMapper.writeValueAsString(recordDTOList)));
     }
 

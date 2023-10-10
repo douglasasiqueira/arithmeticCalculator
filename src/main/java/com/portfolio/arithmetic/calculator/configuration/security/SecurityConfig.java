@@ -1,6 +1,7 @@
 package com.portfolio.arithmetic.calculator.configuration.security;
 
 import com.portfolio.arithmetic.calculator.configuration.security.filter.AuthenticationFilterJWT;
+import com.portfolio.arithmetic.calculator.configuration.security.filter.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,9 @@ public class SecurityConfig {
     @Autowired
     private AuthenticationFilterJWT authFilter;
 
+    @Autowired
+    private CorsFilter corsFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -30,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"swagger-ui/*").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )

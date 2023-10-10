@@ -12,7 +12,7 @@ public class RecordDTO {
 
     private long id;
 
-    private long operationId;
+    private OperationDTO operationDTO;
 
     private long userId;
 

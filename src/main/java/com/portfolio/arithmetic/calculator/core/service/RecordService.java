@@ -31,8 +31,13 @@ public class RecordService {
         recordRepository.save(record);
     }
 
-    public List<Record> findAllByUserId(final Long operationId, final int page, final int size) {
+    public List<Record> findAllByUserIdAndOperationIdPageable(final Long operationId, final int page, final int size) {
         final User user = authService.getAuthenticatedUser();
-        return recordRepository.findAllByUserIdAndParams(user.getId(), operationId, PageRequest.of(page, size));
+        return recordRepository.findAllByUserIdAndOperationIdPageableAndOperationIdPageable(user.getId(), operationId, PageRequest.of(page, size));
+    }
+
+    public Long countAllByUserIdAndOperationId(final Long operationId) {
+        final User user = authService.getAuthenticatedUser();
+        return recordRepository.countByUserIdAndOperationId(user.getId(), operationId);
     }
 }

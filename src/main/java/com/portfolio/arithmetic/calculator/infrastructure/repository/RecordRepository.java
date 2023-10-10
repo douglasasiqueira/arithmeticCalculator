@@ -13,7 +13,11 @@ import java.util.List;
 public interface RecordRepository extends CrudRepository<Record, Long> {
     @Query("FROM Record r WHERE r.user.id = :userId AND " +
             "(:operationId is NULL OR r.operation.id = :operationId)")
-    List<Record> findAllByUserIdAndParams(@Param("userId") Long userId,
+    List<Record> findAllByUserIdAndOperationIdPageableAndOperationIdPageable(@Param("userId") Long userId,
                                           @Param("operationId") Long operationId,
                                           Pageable pageable);
+
+    @Query("SELECT COUNT(r) FROM Record r WHERE r.user.id = :userId AND " +
+            "(:operationId is NULL OR r.operation.id = :operationId)")
+    long countByUserIdAndOperationId(Long userId, Long operationId);
 }

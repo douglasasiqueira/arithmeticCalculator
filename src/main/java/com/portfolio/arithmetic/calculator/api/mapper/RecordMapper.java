@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface RecordMapper {
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "operation.id", target = "operationId")
+    @Mapping(source = "operation", target = "operationDTO")
     @Mapping(source = "user.id", target = "userId")
     RecordDTO recordToRecordDTO(Record record);
 }

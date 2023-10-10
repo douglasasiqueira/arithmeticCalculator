@@ -27,7 +27,9 @@ public class RecordMapperTest {
         RecordMapper mapper = Mappers.getMapper(RecordMapper.class);
         RecordDTO recordDTO = mapper.recordToRecordDTO(record);
 
-        Assertions.assertEquals(recordDTO.getOperationId(), operation.getId());
+        Assertions.assertEquals(recordDTO.getOperationDTO().getCost(), operation.getCost());
+        Assertions.assertEquals(recordDTO.getOperationDTO().getId(), operation.getId());
+        Assertions.assertEquals(recordDTO.getOperationDTO().getType(), operation.getType());
         Assertions.assertEquals(recordDTO.getUserId(), user.getId());
         Assertions.assertEquals(recordDTO.getAmount(), record.getAmount());
     }

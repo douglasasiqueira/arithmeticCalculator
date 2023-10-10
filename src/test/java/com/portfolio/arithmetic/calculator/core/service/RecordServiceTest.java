@@ -52,10 +52,10 @@ public class RecordServiceTest {
 
         when(authService.getAuthenticatedUser()).thenReturn(user);
 
-        recordService.findAllByUserId(42L, 1, 10);
+        recordService.findAllByUserIdAndOperationIdPageable(42L, 1, 10);
 
         verify(recordRepository, times(1))
-                .findAllByUserIdAndParams(user.getId(), 42L, PageRequest.of(1, 10));
+                .findAllByUserIdAndOperationIdPageableAndOperationIdPageable(user.getId(), 42L, PageRequest.of(1, 10));
     }
 
     private Operation mockOperation() {
