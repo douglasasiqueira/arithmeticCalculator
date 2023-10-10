@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.arithmetic.calculator.api.dto.AuthRequestDTO;
 import com.portfolio.arithmetic.calculator.core.customException.AuthenticationException;
 import com.portfolio.arithmetic.calculator.core.service.AuthService;
-import com.portfolio.arithmetic.calculator.core.service.AuthServiceTest;
 import com.portfolio.arithmetic.calculator.core.service.JWTService;
 import com.portfolio.arithmetic.calculator.core.service.UserService;
 import org.junit.jupiter.api.Test;

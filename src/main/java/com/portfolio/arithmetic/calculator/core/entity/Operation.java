@@ -4,7 +4,6 @@ import com.portfolio.arithmetic.calculator.core.application.operationBehavior.Op
 import com.portfolio.arithmetic.calculator.core.customException.ResourceNotImplementedException;
 import com.portfolio.arithmetic.calculator.core.enums.OperationType;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

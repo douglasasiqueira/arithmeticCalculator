@@ -14,9 +14,7 @@ import org.springframework.data.domain.PageRequest;
 
 import java.math.BigDecimal;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.postgresql.hostchooser.HostRequirement.any;
 
 @ExtendWith(MockitoExtension.class)
 public class RecordServiceTest {

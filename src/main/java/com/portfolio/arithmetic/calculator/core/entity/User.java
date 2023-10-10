@@ -2,7 +2,6 @@ package com.portfolio.arithmetic.calculator.core.entity;
 
 import com.portfolio.arithmetic.calculator.core.customException.InsufficientBalanceException;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
