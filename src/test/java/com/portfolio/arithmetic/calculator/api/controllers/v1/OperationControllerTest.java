@@ -1,6 +1,8 @@
 package com.portfolio.arithmetic.calculator.api.controllers.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.portfolio.arithmetic.calculator.api.dto.OperationDTO;
+import com.portfolio.arithmetic.calculator.api.mapper.OperationMapper;
 import com.portfolio.arithmetic.calculator.configuration.security.filter.AuthenticationFilterJWT;
 import com.portfolio.arithmetic.calculator.core.customException.AuthenticationException;
 import com.portfolio.arithmetic.calculator.core.customException.InsufficientBalanceException;
@@ -12,6 +14,7 @@ import com.portfolio.arithmetic.calculator.core.service.AuthServiceTest;
 import com.portfolio.arithmetic.calculator.core.service.OperationService;
 import com.portfolio.arithmetic.calculator.core.service.UserService;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,6 +25,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -47,20 +51,25 @@ public class OperationControllerTest {
     @MockBean
     private OperationService operationService;
 
+    @MockBean
+    private OperationMapper operationMapper;
+
     @Autowired
     private MockMvc mockMvc;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void shouldReturnAllOperations() throws Exception{
         final List<Operation> operationList = operationList();
+        final List<OperationDTO> operationDTOList = operationList.stream()
+                .map(operationMapper::operationToOperationDTO).toList();
 
         when(operationService.getAll()).thenReturn(operationList);
 
         mockMvc.perform(get("/v1/operation"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(objectMapper.writeValueAsString(operationList)));
+                .andExpect(content().string(objectMapper.writeValueAsString(operationDTOList)));
     }
 
     @Test

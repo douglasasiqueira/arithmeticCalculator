@@ -10,7 +10,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Configuration
-public class CorsFilter extends OncePerRequestFilter {
+public class AccessControlFilter extends OncePerRequestFilter {
 
     @Override
     public void doFilterInternal(HttpServletRequest request,
@@ -20,6 +20,7 @@ public class CorsFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        response.setHeader("Access-Control-Expose-Headers", "X-total-count");
         response.setHeader("Access-Control-Max-Age", "3600");
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
