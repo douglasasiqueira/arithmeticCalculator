@@ -3,12 +3,10 @@ package com.portfolio.arithmetic.calculator.api.controllers.v1;
 import com.portfolio.arithmetic.calculator.api.mapper.RecordMapper;
 import com.portfolio.arithmetic.calculator.core.entity.Record;
 import com.portfolio.arithmetic.calculator.core.service.RecordService;
+import feign.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +32,12 @@ public class RecordController {
                 .body(recordList.stream()
                 .map(recordMapper::recordToRecordDTO)
                 .collect(Collectors.toList()));
+    }
+
+    @DeleteMapping("/{recordId}")
+    public ResponseEntity<?> deleteRecord(@PathVariable Long recordId) {
+        recordService.deleteRecordId(recordId);
+        return ResponseEntity.ok().build();
     }
 
 }

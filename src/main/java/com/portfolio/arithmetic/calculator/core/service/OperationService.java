@@ -44,8 +44,8 @@ public class OperationService {
             throw new ResourceNotFoundException();
         }
 
-        user.withdraw(operation.get().getCost());
         response = operation.get().getResponse(this.operationBehaviorList, operators);
+        user.withdraw(operation.get().getCost());
         recordService.createRecord(user, operation.get(), response.toString());
 
         return response;

@@ -38,6 +38,9 @@ public class User{
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @Version
+    private long version;
+
     public List<GrantedAuthority> getAuthorities() {
         return Stream.of("default")
                 .map(SimpleGrantedAuthority::new)

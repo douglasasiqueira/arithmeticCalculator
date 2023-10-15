@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode
+@SQLDelete(sql = "UPDATE record SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +40,6 @@ public class Record {
 
     @CreationTimestamp
     private LocalDateTime date;
+
+    private boolean deleted = Boolean.FALSE;
 }

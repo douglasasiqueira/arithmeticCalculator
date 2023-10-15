@@ -1,9 +1,6 @@
 package com.portfolio.arithmetic.calculator.api.controllers.v1;
 
-import com.portfolio.arithmetic.calculator.core.customException.AuthenticationException;
-import com.portfolio.arithmetic.calculator.core.customException.InsufficientBalanceException;
-import com.portfolio.arithmetic.calculator.core.customException.ResourceNotFoundException;
-import com.portfolio.arithmetic.calculator.core.customException.ResourceNotImplementedException;
+import com.portfolio.arithmetic.calculator.core.customException.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -52,12 +49,10 @@ public class GeneralControllerAdvice {
         return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
     }
 
-    @ExceptionHandler({IllegalArgumentException.class})
-    public ResponseEntity<?> handleIllegalArgumentException(final IllegalArgumentException ex) {
+    @ExceptionHandler({IllegalArgumentException.class, InvalidOperatorsException.class})
+    public ResponseEntity<?> handleIllegalArgumentException(final RuntimeException ex) {
         final Map<String, String> response = new HashMap<String, String>();
-
         response.put("error", ex.getMessage());
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }

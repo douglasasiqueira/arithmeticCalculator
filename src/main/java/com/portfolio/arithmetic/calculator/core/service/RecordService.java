@@ -1,5 +1,6 @@
 package com.portfolio.arithmetic.calculator.core.service;
 
+import com.portfolio.arithmetic.calculator.core.customException.ResourceNotFoundException;
 import com.portfolio.arithmetic.calculator.core.entity.Operation;
 import com.portfolio.arithmetic.calculator.core.entity.Record;
 import com.portfolio.arithmetic.calculator.core.entity.User;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -39,5 +41,16 @@ public class RecordService {
     public Long countAllByUserIdAndOperationId(final Long operationId) {
         final User user = authService.getAuthenticatedUser();
         return recordRepository.countByUserIdAndOperationId(user.getId(), operationId);
+    }
+
+    public void deleteRecordId(final Long recordId) {
+        final User user = authService.getAuthenticatedUser();
+        final Record record = recordRepository.findByIdAndUserId(recordId, user.getId());
+
+        if (Objects.isNull(record)) {
+            throw new ResourceNotFoundException();
+        }
+
+        recordRepository.delete(record);
     }
 }

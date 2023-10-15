@@ -20,4 +20,6 @@ public interface RecordRepository extends CrudRepository<Record, Long> {
     @Query("SELECT COUNT(r) FROM Record r WHERE r.user.id = :userId AND " +
             "(:operationId is NULL OR r.operation.id = :operationId)")
     long countByUserIdAndOperationId(Long userId, Long operationId);
+
+    Record findByIdAndUserId(Long Id, Long UserId);
 }
