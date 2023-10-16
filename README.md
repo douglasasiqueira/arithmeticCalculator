@@ -1,7 +1,5 @@
 # arithmeticCalculator
 
----
-
 This project has been built using.
 
 - Java 17 
