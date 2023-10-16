@@ -1,6 +1,6 @@
 # arithmeticCalculator
 
-This project has been built using.
+This project has been built using:
 
 - Java 17 
 - Gradle
@@ -9,7 +9,7 @@ This project has been built using.
 It also uses docker in order to raise the database container. To run locally:
 
 1. Download Java 17
-2. Run the command ```docker-composes up``` in the root directory with doctor damon running. This will start the postgres server.
+2. Run the command ```docker-compose up``` in the root directory with doctor damon running. This will start the postgres server.
 3. Run the migrations using the command ```./gradlew flywayMigrate```.
 4. Finally, starts the application using ```./gradlew bootRun```.
 
